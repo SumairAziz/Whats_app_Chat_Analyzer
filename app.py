@@ -13,7 +13,7 @@ plt.style.use("dark_background")
 sns.set_style("darkgrid")
 
 # Load cleaned dataframe
-df_clean = pd.read_csv("cleaned_chat.csv", parse_dates=["Timestamp"])
+df_clean = pd.read_csv("cleaned_chat2.csv", parse_dates=["Timestamp"])
 # make a copy to avoid SettingWithCopy warnings
 df_clean = df_clean.copy()
 
