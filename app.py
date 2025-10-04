@@ -7,17 +7,17 @@ from wordcloud import WordCloud
 from collections import Counter
 import ast
 
-# Page config
+# Page configuration
 st.set_page_config(page_title="WhatsApp Chat Dashboard", layout="wide")
 plt.style.use("dark_background")
 sns.set_style("darkgrid")
 
-# Load cleaned dataframe
+# Loading cleaned dataframe
 df_clean = pd.read_csv("cleaned_chat.csv", parse_dates=["Timestamp"])
-# make a copy to avoid SettingWithCopy warnings
+# making a copy to avoid SettingWithCopy warnings
 df_clean = df_clean.copy()
 
-# If Emojis column was saved as a string representation of a list, try to convert it back
+
 if "Emojis" in df_clean.columns:
     if df_clean["Emojis"].dtype == object:
         def try_parse(x):
@@ -27,17 +27,17 @@ if "Emojis" in df_clean.columns:
                 return x
         df_clean["Emojis"] = df_clean["Emojis"].apply(try_parse)
 
-# Ensure Message is string
+# Ensuring Message is string
 df_clean["Message"] = df_clean["Message"].astype(str)
 
-# Define tabs (removed Emoji Analysis tab)
+# Defining tabs
 tab_home, tab_stats, tab_words, tab_sentiment, tab_users = st.tabs(
     ["🏠 Home", "📊 Message Statistics", "📝 Word Analysis", "😊 Sentiment Analysis", "👥 User Comparison"]
 )
 
-# -------------------------
-# Home (cleaned data sample)
-# -------------------------
+
+# Home
+
 with tab_home:
     st.header("Home — Cleaned Data (sample)")
     st.write("Cleaned dataset used for the dashboard.")
@@ -52,19 +52,7 @@ with tab_home:
 
 with tab_stats:
     st.header("📊 Message Statistics")
-    st.write("Summary stats and trends (daily/monthly/DOW/heatmap).")
-    msg_counts = df_clean['Sender'].value_counts()
-    top_n = 10
-    top_senders = msg_counts.head(top_n).reset_index()
-    top_senders.columns = ['Sender', 'Messages']
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.barplot(data=top_senders, x='Sender', y='Messages', palette="viridis", ax=ax)
-    for i, v in enumerate(top_senders['Messages']):
-        ax.text(i, v + max(top_senders['Messages']) * 0.01, str(v), color='white', ha='center')
-    ax.set_xticklabels(ax.get_xticklabels(), rotation=30, ha='right')
-    ax.set_title(f"Top {top_n} Senders by Number of Messages")
-    st.pyplot(fig)
+    st.write("Summary stats and trends.")
 
     # Daily / Monthly trends
     df_time = df_clean.set_index('Timestamp').sort_index()
@@ -116,9 +104,9 @@ with tab_words:
         ax.set_title("Word Cloud - Overall Chat")
         st.pyplot(fig)
 
-# -------------------------
+
 # Sentiment Analysis
-# -------------------------
+
 with tab_sentiment:
     st.header("😊 Sentiment Analysis")
     st.write("Sentiment charts will appear here.")
