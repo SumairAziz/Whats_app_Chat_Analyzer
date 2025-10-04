@@ -41,7 +41,8 @@ tab_home, tab_stats, tab_words, tab_sentiment, tab_users = st.tabs(
 with tab_home:
     st.header("Home — Cleaned Data (sample)")
     st.write("Cleaned dataset used for the dashboard.")
-    st.dataframe(df_clean.head(5))
+    cols_to_show = [c for c in df_clean.columns if c != "Cleaned" and c!='Emojis']
+    st.dataframe(df_clean[cols_to_show].head(5))
     col1, col2, col3 = st.columns(3)
     col1.metric("Total Messages", len(df_clean))
     col2.metric("Unique Senders", df_clean["Sender"].nunique())
