@@ -1,6 +1,6 @@
-streamlit
-pandas
-matplotlib
-seaborn
-wordcloud
-emoji
+# streamlit
+# pandas
+# matplotlib
+# seaborn
+# wordcloud
+# emoji
